@@ -27,9 +27,12 @@ import email
 import traceback 
 import re
 
-ORG_EMAIL = "@gmail.com" 
-FROM_EMAIL = "hstest3new" + ORG_EMAIL 
-FROM_PWD = "pcag iggk nasd lvdw" 
+# ORG_EMAIL = "@gmail.com" 
+# FROM_EMAIL = "hstest3new" + ORG_EMAIL       tdc_testing_headspin@headspin.info
+ORG_EMAIL = "@headspin.info" 
+FROM_EMAIL = "tdc_testing_headspin" + ORG_EMAIL 
+#FROM_PWD = "pcag iggk nasd lvdw"  vwhn bnwt ywjm rtbf
+FROM_PWD = "vwhn bnwt ywjm rtbf"
 SMTP_SERVER = "imap.gmail.com" 
 SMTP_PORT = 993
 
@@ -62,7 +65,8 @@ class SampleTest(unittest.TestCase):
 		},
 		# "udid": "RFCW20WHMXR",
 		"browserName": "chrome", 
-		"browserVersion": "91.0.4472.77",
+		#"browserVersion": "91.0.4472.77", 
+		"browserVersion": "108.0.5359.94",
 		# "browserName": "MicrosoftEdge",
 		# "browserVersion": "91.0.864.48",
 		"headspin:testName":self.test_name,
@@ -78,15 +82,15 @@ class SampleTest(unittest.TestCase):
 		#Initializing Kpis
 		self.kpi_labels = {}
 		self.kpi_labels["device_starts"] = {"start" : None, "end" : None}
-		# self.kpi_labels["Upload_Time"] = {"start" : None, "end" : None}
+		#self.kpi_labels["Upload_Time"] = {"start" : None, "end" : None}
 		self.kpi_labels["Session_Record"] = {"start" : None, "end" : None}
 		self.kpi_labels["Waterfall"] = {"start" : None, "end" : None}
 
-		# self.kpi_labels["team_settings"] = {"start" : None, "end" : None}
-		# self.kpi_labels["usage"] = {"start" : None, "end" : None}
+		self.kpi_labels["team_settings"] = {"start" : None, "end" : None}
+		self.kpi_labels["usage"] = {"start" : None, "end" : None}
 		self.kpi_labels["remote_controls"] = {"start" : None, "end" : None}
-		# self.kpi_labels["performance_sessions"] = {"start" : None, "end" : None}
-		# self.kpi_labels["performance_monitoring"] = {"start" : None, "end" : None}
+		self.kpi_labels["performance_sessions"] = {"start" : None, "end" : None}
+		self.kpi_labels["performance_monitoring"] = {"start" : None, "end" : None}
 
 		self.pass_count=0
 		self.data_kpis = {}
@@ -156,7 +160,6 @@ class SampleTest(unittest.TestCase):
 		self.driver.get(urls[0])
 		print(urls[0])
 
-			
 
 	def login(self):
 		self.status = "Failed Login"
@@ -169,7 +172,8 @@ class SampleTest(unittest.TestCase):
 			time.sleep(1)
 		login_id = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[ng-model="email_address"]')))
 		login_id.click()
-		login_id.send_keys("hstest3new@gmail.com")
+		#login_id.send_keys("hstest3new@gmail.com") 
+		login_id.send_keys("tdc_testing_headspin@headspin.info")
 		login_box = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.login-button-label')))
 		sleep(5)
 		login_box.click()
@@ -215,6 +219,8 @@ class SampleTest(unittest.TestCase):
 		login_link1 = self.wait.until(EC.presence_of_element_located((By.XPATH,'//div[contains(text(),"Login to HeadSpin")]')))
 		login_link1.click()
 		time.sleep(15)
+		team = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span[hs-docs-location="navbar-icon-base.myteam"]')))			# Team settings Menu
+
 		
 	def userflow(self):
 		self.status = "Failed Useflow"
@@ -224,7 +230,7 @@ class SampleTest(unittest.TestCase):
 		team = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span[hs-docs-location="navbar-icon-base.myteam"]')))			# Team settings Menu
 		team.click()
 		self.kpi_labels["team_settings"]['start'] = int(round(time.time() * 1000))
-		self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(text(),"TDC Testing Team")]')))			# Team settings Menu
+		self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[text()="Default"]')))			# Team settings Menu
 		self.kpi_labels["team_settings"]['end'] = int(round(time.time() * 1000))
 		print ("team_settings Time", self.kpi_labels["team_settings"]['end'] - self.kpi_labels["team_settings"]['start'] )
 		self.pass_count = self.pass_count + 1
@@ -310,7 +316,7 @@ class SampleTest(unittest.TestCase):
 		searching.send_keys("test1")
 		time.sleep(3)	
 		try:
-			del_btn = self.wait.until(EC.presence_of_element_located((By.XPATH,'//tbody/tr[1]/td[4]/button[1]')))
+			del_btn = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[@class="btn btn-outline-danger"]')))
 			del_btn.click()
 			time.sleep(5)
 			dlte_userflow = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Delete User Flow")]')))
@@ -352,12 +358,12 @@ class SampleTest(unittest.TestCase):
 		
 																										# Performance Sessions Menu
 		time.sleep(15)
-		session_tag = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[placeholder="Enter a Session Tag Key"]')))
-		time.sleep(7)
-		session_tag.send_keys("host: RZ8TA0F0V7K@dev-in-blr-0-proxy-34-lin.headspin.io")
-		time.sleep(7)
-		session_tag.send_keys(Keys.ENTER)																								# Sorting all the session ran on Tuesday of the week
-		time.sleep(10)
+		# session_tag = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[placeholder="Enter a Session Tag Key"]')))
+		# time.sleep(7)
+		# session_tag.send_keys("host: RZ8TA0F0V7K@dev-in-blr-0-proxy-34-lin.headspin.io")
+		# time.sleep(7)
+		# session_tag.send_keys(Keys.ENTER)																								# Sorting all the session ran on Tuesday of the week
+		# time.sleep(10)
 		open_session = self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="session-buttons"]//a[@id="waterfall-button-0"]')))
 		open_session.click()																											# Opening a session
 		time.sleep(5)
@@ -415,14 +421,28 @@ class SampleTest(unittest.TestCase):
 		# 	delete_btn = self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="delete-button"]')))
 		# 	delete_btn.click()
 
-		session_tag.send_keys("user_flow: Test" + "\n")
-		time.sleep(4)
-		session_tag.send_keys(Keys.ENTER)    
+		session_tag.send_keys("user_flow: Test")
+		time.sleep(2)
+		session_tag.send_keys(Keys.ENTER)
+		#self.driver.press_keycode(66)
+		time.sleep(1)
+		try:
+			issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
+			issue.click() 
+			print("issue clicked")
+		except:
+			self.driver.tap([(2450,562)])
+			print("tap clicked")
+			time.sleep(1) 
+			# issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
+			# issue.click()  
 			# time.sleep(5)																									# Sorting all the session ran on Tuesday of the week
 		time.sleep(10)
-		issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/6ab39604-f6a6-11ed-9475-0285c5996533"]')))
-		issue.click() 																								# Viewing Issue UI of a particular session
-		time.sleep(5)
+		#session_tag.click()
+		#time.sleep(5)
+		# issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
+		# issue.click() 																								# Viewing Issue UI of a particular session
+		#time.sleep(5)
 		try:
 			clsbtn = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.close-button')))
 			clsbtn.click()
@@ -451,27 +471,54 @@ class SampleTest(unittest.TestCase):
 		time.sleep(35)
 		search_dev = self.wait.until(EC.presence_of_element_located((By.XPATH,'//input[@placeholder="Search Devices..."]')))
 		search_dev.click()
-		#try:
-		    # initializing list
-		    #a= "00008030-001025121AEB802E"
-		    # b= "00008020-001C318221E1802E"
-		    # test_list = [a ,b]
+		try:
+			# initializing list
+			a= "00008110-000579300C81401E"
+			b= "00008110-001A59A83E6A401E"
+			c= "00008110-000161DE3611401E"
+			d= "00008110-0018056A0A01401E"
+			e= "00008110-0014713C36DA401E"
+			f= "00008110-000439311AD2401E"
+			g= "00008110-001451380A89401E"
+			h= "00008110-001444A41EDA401E"
+			i= "00008110-0000581C0246401E"
+			j= "00008110-001444DE113A401E"
+			k= "00008110-001A48461406401E"
+			l= "00008110-00127DCC1E6A401E"
+			m= "00008120-000C75641E04201E"
+			n= "00008120-00021C902682201E"
+			o= "00008120-001C7DC21E40201E"
+			p= "00008120-001C196A1AD2201E"
+			q= "00008120-001C58E83E32201E"
+			r= "00008120-001271DA3EB8201E"
+			s= "00008120-000A0C9C1ED2201E"
+			t= "00008120-000C21993EE2201E"
+			#u= "00008120-0019459E36A2201E"
+			v= "00008120-0002210611C2201E"
+			#w= "00008120-001A709C1110A01E"
+			#x= "00008120-0001796A1AD2201E"
+			y= "00008110-000168311AD2401E"
+			z= "00008120-001C38242E10A01E"
+			#aa= "00008120-001A311A0AE2201E"
+			ab= "00008110-000A0DDA1A85401E"
+			ac= "00008120-000064CC2E40201E"
+
+			test_list = [a , b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, v, y, z, ab, ac]
 	
-		    # printing original list
-		    # print("Original list is : " + str(test_list))
+			# printing original list
+			print("Original list is : " + str(test_list))
 	
-		    # using random.choice() to
-		    # get a random number		
-		
-		    # random_num = random.choice(test_list)
-	
-		    # printing random number
-		    # print("Random selected number is : " + str(random_num))
-		    #search_dev.send_keys("10AC8E1K3E000RW")																			# Searching a particular Apple device
-		    # search_dev.send_keys(str(random_num))	
-		#except:
-		time.sleep(2)
-		search_dev.send_keys("00008020-001C318221E1802E")	
+			# using random.choice() to
+			# get a random number
+			random_num = random.choice(test_list)
+			time.sleep(5)
+			# printing random number
+			print("Random selected number is : " + str(random_num))
+			#search_dev.send_keys("10AC8E1K3E000RW")
+			time.sleep(5)																			# Searching a particular Apple device
+			search_dev.send_keys(str(random_num))	
+		except:
+			time.sleep(2)	
 		time.sleep(5)																			# Searching a particular Apple device
 		try:
 			stoping = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[title="stop device"]')))
@@ -510,7 +557,6 @@ class SampleTest(unittest.TestCase):
 			uninstall = self.wait.until(EC.presence_of_element_located((By.XPATH,'//td[text()="Speedtest"]//following::div[1]'))) 
 			uninstall.click()																												# Uninstalling the speedtest app installed
 			time.sleep(10)
-			time.sleep(9)
 			uninstall_ok = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Okay")]'))) 
 			uninstall_ok.click()																											# Uninstalling the speedtest app installed
 			time.sleep(9)
@@ -524,16 +570,21 @@ class SampleTest(unittest.TestCase):
 		location_of_ipa = self.upload_file()
 		print("done ",location_of_ipa)
 		upload_app.send_keys(location_of_ipa)
-		time.sleep(40)
-		okay =  self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Okay")]'))) 
-		okay .click()
+		time.sleep(5)
+		install = self.driver.find_element(By.XPATH,"//button[contains(text(),'Install')]")   
+		install.click()
+		time.sleep(30)
+		# okay =  self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Okay")]'))) 
+		# okay .click()
 		time.sleep(15)
-		uninstall = self.wait.until(EC.presence_of_element_located((By.XPATH,'//td[text()="Speedtest"]//following::div[1]'))) 
-		uninstall.click()																												# Uninstalling the speedtest app installed
-		time.sleep(10)
-		time.sleep(9)
-		uninstall_ok = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Okay")]'))) 
-		uninstall_ok.click()																											# Uninstalling the speedtest app installed
+		# uninstall = self.wait.until(EC.presence_of_element_located((By.XPATH,'//td[text()="Speedtest"]//following::div[1]'))) 
+		# uninstall.click()																												# Uninstalling the speedtest app installed
+		# time.sleep(7)
+		# uninstall_ok = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Okay")]'))) 
+		# uninstall_ok.click()																											# Uninstalling the speedtest app installed
+		# time.sleep(5)
+		dismiss = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[@class="btn text-muted btn-link"]'))) 
+		dismiss.click()																											# Uninstalling the speedtest app installed
 		time.sleep(9)
 		
 	def upload_file(self):
@@ -651,7 +702,7 @@ class SampleTest(unittest.TestCase):
 			#self.driver.get('https://ui.tricentis.headspin.io/login')
 			self.driver.get('https://ui-dev.headspin.io/')
 			self.login()
-			#self.userflow()
+			self.userflow()
 			self.remotecntrl()
 			self.upload()
 			self.screenshot()
@@ -666,6 +717,8 @@ class SampleTest(unittest.TestCase):
 		#self.driver.execute_script({'headspin:quitSession'}, {'status': state})
 		session_url = "https://ui-dev.headspin.io/sessions/" + self.session_id + "/waterfall"
 		print("\nURL :", session_url)
+		self.hs_api_call.add_session_tags(session_id=self.session_id,Fail_reason=self.status)
+
 		self.get_video_start_timestamp()
 
 		self.wait_for_session_video_becomes_available()
