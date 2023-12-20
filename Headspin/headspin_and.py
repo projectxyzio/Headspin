@@ -128,6 +128,7 @@ class SampleTest(unittest.TestCase):
 				print('From: ' + email_from + '\n')
 				print('Subject: ' + email_subject + '\n')
 
+
 				# Get the email body
 				email_body = ""
 				if msg.is_multipart():
@@ -311,7 +312,7 @@ class SampleTest(unittest.TestCase):
 		searching.send_keys("test1")
 		time.sleep(3)	
 		try:
-			del_btn = self.wait.until(EC.presence_of_element_located((By.XPATH,'//tbody/tr[1]/td[4]/button[1]')))
+			del_btn = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[@class="btn btn-outline-danger"]')))
 			del_btn.click()
 			time.sleep(5)
 			dlte_userflow = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Delete User Flow")]')))
@@ -418,9 +419,10 @@ class SampleTest(unittest.TestCase):
 
 		session_tag.send_keys("user_flow: Test" + "\n")
 		time.sleep(4)
-		session_tag.send_keys(Keys.ENTER)    
+		session_tag.send_keys(Keys.ENTER)
+		session_tag.send_keys('/')      
 			# time.sleep(5)																									# Sorting all the session ran on Tuesday of the week
-		time.sleep(10)
+		time.sleep(6)
 		issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/6ab39604-f6a6-11ed-9475-0285c5996533"]')))
 		issue.click() 																								# Viewing Issue UI of a particular session
 		time.sleep(5)

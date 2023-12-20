@@ -46,6 +46,20 @@ class hsApi:
                 request_url, headers= self.headers)
         return response.json()
 
+    def add_session_tags(self, session_id, **kwargs):
+        # followed by any number of tags , syntax:<tag_key="tag_value">. eg: type1="test_session",type2="test_session"
+        # Function call example:
+        # hs_class.add_session_tags("3da744a6-c269-11e9-b708-0641978974b8",type="test_session")
+        
+        api_endpoint = "https://api-dev.headspin.io/v0/sessions/tags/{}".format(
+            session_id)
+        pay_load = []
+        for key, value in kwargs.items():
+            pay_load.append({"%s" % key: value})
+        r = requests.post(url=api_endpoint, json=pay_load, headers={
+                          'Authorization': 'Bearer {}'.format(self.access_token)})
+        print(r)
+
     #API call to get set labels in the performance session.
     def add_label(self, session_id, name, category, start_time, end_time, label_type='user', data=None):
         '''

@@ -53,8 +53,8 @@ from hs_api import hsApi
 
 class SampleTest(unittest.TestCase):
 
-	test_name = "Headspin_ios"
-	KPI_COUNT = 8
+	test_name = "Headspin_Logs"
+	KPI_COUNT = 4
 	pass_count = 0
 
 
@@ -90,11 +90,11 @@ class SampleTest(unittest.TestCase):
 		self.kpi_labels["Session_Record"] = {"start" : None, "end" : None}
 		self.kpi_labels["Waterfall"] = {"start" : None, "end" : None}
 
-		self.kpi_labels["team_settings"] = {"start" : None, "end" : None}
-		self.kpi_labels["usage"] = {"start" : None, "end" : None}
+		# self.kpi_labels["team_settings"] = {"start" : None, "end" : None}
+		# self.kpi_labels["usage"] = {"start" : None, "end" : None}
 		self.kpi_labels["remote_controls"] = {"start" : None, "end" : None}
-		self.kpi_labels["performance_sessions"] = {"start" : None, "end" : None}
-		self.kpi_labels["performance_monitoring"] = {"start" : None, "end" : None}
+		# self.kpi_labels["performance_sessions"] = {"start" : None, "end" : None}
+		# self.kpi_labels["performance_monitoring"] = {"start" : None, "end" : None}
 
 		self.pass_count=0
 		self.data_kpis = {}
@@ -184,294 +184,17 @@ class SampleTest(unittest.TestCase):
 		#login_box.click()
 		sleep(15)
 		self.read_email_from_gmail()
-		sleep(3)
+		sleep(10)
 		
-		# self.driver.get('https://login.yahoo.com/')
-		# email = self.wait.until(EC.presence_of_element_located((By.XPATH, '//input[@name="username"]')))
-		# sleep(5)
-		# email.send_keys("hstest3new@gmail.com")
-		# time.sleep(95)
-		##actions.move_by_offset(2000, 950).click().perform()
-		# next = self.wait.until(EC.presence_of_element_located((By.XPATH,'//input[@id="login-signin"]')))
-		# next.click()
-		# time.sleep(95)
-		# password = self.wait.until(EC.presence_of_element_located((By.XPATH,'//input[@type="password"]')))
-		# password.click()
-		# time.sleep(1)
-		# password.send_keys("spinhead@123")
-		# time.sleep(10)
-		# print(self.driver.window_handles)
-		# next1 = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[@value="Next"]')))
-		# next1.click()
-		# time.sleep(20)
-		# self.driver.get('https://mail.yahoo.com/')
-		## mail = self.wait.until(EC.presence_of_element_located((By.XPATH,'//li[@id="ybar-navigation-item-mail"]')))
-		## mail.click()
-		# time.sleep(10)
-		##actions = ActionChains(self.driver)
-		## actions.move_by_offset(1000, 263).click().perform() #firefox
-		##actions.move_by_offset(431, 70).click().perform()	 #safari	
-		# mail_click = self.wait.until(EC.presence_of_element_located((By.XPATH,'(//span[text()="Sort"]//following::span[contains(text(),"Tricentis")])[1]')))																		 # for yahoo sign in
-		# mail_click.click()
-		# time.sleep(10)
-		# login_link = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[contains(text(),"Login Link")]')))
-		# login_link.click()
-		time.sleep(8)
-		# print(self.driver.window_handles)           
-		# window_handles = self.driver.window_handles           																					# switching the window from yahoo mail to Tricentis
-		# self.driver.switch_to.window(window_handles[1])
+	
+	
 		login_link1 = self.wait.until(EC.presence_of_element_located((By.XPATH,'//div[contains(text(),"Login to HeadSpin")]')))
 		login_link1.click()
 		time.sleep(15)
 		team = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span[hs-docs-location="navbar-icon-base.myteam"]')))			# Team settings Menu
 
 		
-	def userflow(self):
-		self.status = "Failed Useflow"
-		time.sleep(5)
-
-
-		team = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span[hs-docs-location="navbar-icon-base.myteam"]')))			# Team settings Menu
-		team.click()
-		self.kpi_labels["team_settings"]['start'] = int(round(time.time() * 1000))
-		self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[text()="Default"]')))			# Team settings Menu
-		self.kpi_labels["team_settings"]['end'] = int(round(time.time() * 1000))
-		print ("team_settings Time", self.kpi_labels["team_settings"]['end'] - self.kpi_labels["team_settings"]['start'] )
-		self.pass_count = self.pass_count + 1
-		time.sleep(3)
-		self.kpi_labels["team_settings"]['start_sensitivity'] = 0.9
-		self.kpi_labels["team_settings"]['end_sensitivity'] = 0.9
-		time.sleep(2)
-		print("Team Setting")	
-
-		time.sleep(4)
-		usage = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span[hs-docs-location="navbar-icon-base.usage"]')))			# Usage Menu
-		usage.click()
-		self.kpi_labels["usage"]['start'] = int(round(time.time() * 1000))
-		self.wait.until(EC.presence_of_element_located((By.XPATH,'//div[contains(text(),"Device Usage")]')))		
-		self.kpi_labels["usage"]['end'] = int(round(time.time() * 1000))
-		print ("usage Time", self.kpi_labels["usage"]['end'] - self.kpi_labels["usage"]['start'] )
-		self.pass_count = self.pass_count + 1
-		time.sleep(3)
-		self.kpi_labels["usage"]['start_sensitivity'] = 0.9
-		self.kpi_labels["usage"]['end_sensitivity'] = 0.9
-		time.sleep(2)
-		print("usage")
-
-
-		time.sleep(40)
-		try:
-			self.driver.find_element(By.XPATH, '//button[@id="from-datepicker"]')
-			time.sleep(1)
-		except:
-			time.sleep(15)
-		datebox = self.wait.until(EC.presence_of_element_located((By.XPATH, '//button[@id="from-datepicker"]')))
-		datebox.click()
-		time.sleep(10)
-		datepick = self.wait.until(EC.presence_of_element_located((By.XPATH,'//span[contains(text(),"15")]')))
-		datepick.click()
-		time.sleep(20)
-		button = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,'button[id="visibility-settings__BV_toggle_"]')))
-		button.click()
-		time.sleep(3)
-		total =  self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'label[class="custom-control-label"]')))
-		total.click()
-		time.sleep(2)
-		total.click()
-		time.sleep(3)
-		device_usage = self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[contains(text(),"Device Usage")]')))					# Device Usage under Usage Menu
-		device_usage.click()
-		time.sleep(10)
-		hostname = self.wait.until(EC.presence_of_element_located((By.XPATH,'(//tbody/tr[1]/td[2])[1]')))
-		ht=hostname.text
-		time.sleep(2)
-		time.sleep(2)
-		select = Select(self.driver.find_element(By.XPATH,'//button[contains(text(),"Filter Devices")]//preceding::select[1]'))
-		time.sleep(2)
-		select.select_by_index("2")
-
-
-		time.sleep(3)
-		hostname2 = self.wait.until(EC.presence_of_element_located((By.XPATH,'//div[@role="group"]//input[@placeholder="Hostname"]')))
-		hostname2.click()
-		time.sleep(2)
-		hostname2.send_keys(ht)
-		time.sleep(5)
-		filterbtn = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Filter Devices")]')))
-		filterbtn.click()
-		time.sleep(7)
-		performance = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span[hs-docs-location="navbar-icon-base.performance"]')))
-		performance.click()		
-		
-		self.kpi_labels["performance_monitoring"]['start'] = int(round(time.time() * 1000))
-		self.wait.until(EC.presence_of_element_located((By.XPATH,'//div[contains(text(),"User Flows")]')))		
-		self.kpi_labels["performance_monitoring"]['end'] = int(round(time.time() * 1000))
-		print ("performance_monitoring", self.kpi_labels["performance_monitoring"]['end'] - self.kpi_labels["performance_monitoring"]['start'] )
-		self.pass_count = self.pass_count + 1
-		time.sleep(3)
-		self.kpi_labels["performance_monitoring"]['start_sensitivity'] = 0.9
-		self.kpi_labels["performance_monitoring"]['end_sensitivity'] = 0.9
-		time.sleep(2)
-		print("performance_monitoring")																									 # Performance Monitoring Menu
-		time.sleep(15)
-
-		searching = self.wait.until(EC.presence_of_element_located((By.XPATH,'//input[@type="search"]')))
-		time.sleep(4)
-		searching.send_keys("test1")
-		time.sleep(3)	
-		try:
-			del_btn = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[@class="btn btn-outline-danger"]')))
-			del_btn.click()
-			time.sleep(5)
-			dlte_userflow = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Delete User Flow")]')))
-			dlte_userflow .click()																										# Deleting the "test" Userflow
-			time.sleep(15)
-		except:
-			time.sleep(1)
-		new_user_flow = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"+ New User Flow")]')))
-		new_user_flow.click()
-		time.sleep(3)
-		enter_name = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,'input[placeholder="Enter a name..."]')))
-		enter_name.click()
-		time.sleep(3)
-		enter_name.send_keys("test1")
-		time.sleep(3)
-		enter_des = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,'textarea[placeholder="Enter a description..."]')))
-		enter_des.click()
-		enter_des.send_keys("test1")
-		time.sleep(3)
-		create_user_flow = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Create User Flow")]')))
-		create_user_flow.click()																										# Creating a new Userflow named test
-		time.sleep(3)
-		ok = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"OK")]')))
-		ok.click()
-		time.sleep(17)
-		performance_session = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span[hs-docs-location="navbar-icon-base.sessions-button"]')))
-		performance_session.click()	
-		
-		self.kpi_labels["performance_sessions"]['start'] = int(round(time.time() * 1000))
-		self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@id="waterfall-button-0"]')))		
-		self.kpi_labels["performance_sessions"]['end'] = int(round(time.time() * 1000))
-		print ("performance_sessions", self.kpi_labels["performance_sessions"]['end'] - self.kpi_labels["performance_sessions"]['start'] )
-		self.pass_count = self.pass_count + 1
-		time.sleep(3)
-		self.kpi_labels["performance_sessions"]['start_sensitivity'] = 0.9
-		self.kpi_labels["performance_sessions"]['end_sensitivity'] = 0.9
-		time.sleep(2)
-		print("performance_sessions")
-		
-																										# Performance Sessions Menu
-		time.sleep(15)
-		# session_tag = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[placeholder="Enter a Session Tag Key"]')))
-		# time.sleep(7)
-		# session_tag.send_keys("host: RZ8TA0F0V7K@dev-in-blr-0-proxy-34-lin.headspin.io")
-		# time.sleep(7)
-		# session_tag.send_keys(Keys.ENTER)																								# Sorting all the session ran on Tuesday of the week
-		# time.sleep(10)
-		open_session = self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="session-buttons"]//a[@id="waterfall-button-0"]')))
-		open_session.click()																											# Opening a session
-		time.sleep(5)
-		add_user_flow = self.wait.until(EC.presence_of_element_located((By.XPATH,'//div[contains(text(),"Add to User Flow")]')))
-		add_user_flow.click()
-		time.sleep(3)
-		user_flow_name = self.wait.until(EC.presence_of_element_located((By.XPATH,'//div[contains(text(),"None")]')))
-		user_flow_name.click()
-		time.sleep(4)
-		user_flow_name1 =  self.wait.until(EC.presence_of_element_located((By.XPATH, ' //div[@class="hs-select-option-text"and text() ="test1"]')))
-		time.sleep(4)
-		user_flow_name1.click() 
-		time.sleep(4)
-		status = self.wait.until(EC.presence_of_element_located((By.XPATH,'//hs-select[@options="status_options"]//div[@class="hs-selected"]')))
-		status.click()
-		time.sleep(4)
-		status1 =  self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="hs-select-option-text"and text() ="Passed"]')))
-		status1.click()
-		time.sleep(3)
-		Add_Session = self.wait.until(EC.presence_of_element_located((By.XPATH,'//span[contains(text(),"Add Session to User Flow")]')))
-		Add_Session.click()																											# Adding userflow name as "test" to opened session
-		time.sleep(8)
-		Update_status = self.wait.until(EC.presence_of_element_located((By.XPATH,'//span[contains(text(),"Update Status")]')))
-		Update_status.click()																											# Updating status as "Passed" of Opened session
-		time.sleep(7)
-		view_userflow = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[contains(text(),"View User Flow")]')))
-		view_userflow.click()																											# Viewing the Userflow named "test" created
-		time.sleep(5)
-		clsbtn = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.close-button')))
-		clsbtn.click()
-		time.sleep(4)
-		performance.click()																											# Going Back to Performance Monitoring Menu
-		time.sleep(15)
-		searching = self.wait.until(EC.presence_of_element_located((By.XPATH,'//input[@type="search"]')))
-		time.sleep(4)
-		searching.send_keys("test1")
-		time.sleep(3)
-		del_btn = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[@class="btn btn-outline-danger"]')))
-		del_btn.click()
-		time.sleep(5)
-		dlte_userflow = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Delete User Flow")]')))
-		dlte_userflow .click()																										# Deleting the "test" Userflow
-		time.sleep(15)
-		performance_session.click()																									# Going Back to Performance Sessions Menu
-		time.sleep(15)
-		#session_tag = self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="autocomplete"]//input[@placeholder="Enter a Session Tag Key"]')))
-		session_tag = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'input[placeholder="Enter a Session Tag Key"]')))
-
-		# session_tag.send_keys("app: com.android.chrome" + "\n")
-		# time.sleep(3)
-		# try:
-		# 	self.driver.find_element(By.XPATH, "//span[@class='tag-value' and text()=' Tue ']").is_displayed()
-		# 	session_tag.send_keys(Keys.ENTER)
-		# except:
-		# 	delete_btn = self.wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="delete-button"]')))
-		# 	delete_btn.click()
-
-		session_tag.send_keys("user_flow: Test")
-		time.sleep(2)
-		session_tag.send_keys(Keys.ARROW_RIGHT)
-		session_tag.send_keys('/')
-		#self.driver.press_keycode(66)
-		time.sleep(4)
-		# element = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
-		# actions = action.Actions(self.driver)
-		# actions.move_to_element(element).click().perform()
-
-		# try:
-		# 	issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
-		# 	issue.click() 
-		# 	print("issue clicked")
-		# except:
-		# 	self.driver.tap([(2450,562)])
-		# 	print("tap clicked")
-		# 	time.sleep(1) 
-		# 	try:
-		# 		issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
-		# 		issue.click() 
-		# 	except:
-		# 		pass
-			# issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
-			# issue.click()  
-			# time.sleep(5)																									# Sorting all the session ran on Tuesday of the week
-		#time.sleep(10)
-		#session_tag.click()
-		time.sleep(5)
-		try:
-			issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
-			issue.click() 
-			time.sleep(5)	
-			
-		except:
-			webdriver.ActionChains(self.driver).send_keys(Keys.ESCAPE).perform()	
-			time.sleep(1)	
-			issue = self.wait.until(EC.presence_of_element_located((By.XPATH,'//a[@ng-href="/sessions/e40722bf-63ea-11ee-bd5d-06d8a473fcbf"]')))
-			issue.click()
-			time.sleep(5)																						# Viewing Issue UI of a particular session
-		#time.sleep(5)
-		try:
-			clsbtn = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.close-button')))
-			clsbtn.click()
-
-		except:
-			sleep(1)
+	
 	def remotecntrl(self):
 		self.status = "Failed Starting the device"
 		time.sleep(2)
@@ -564,60 +287,6 @@ class SampleTest(unittest.TestCase):
 		print("Device started")																										
 		time.sleep(12)
 
-	def upload(self):
-		# remote_control = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'span[hs-docs-location="navbar-icon-base.remotecontrol"]')))
-		# remote_control.click()	
-		time.sleep(5)
-		# start_1 = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[class="btn device-button icon-button mr-1 p-0 btn-primary"]')))
-		# start_1.click()
-		# closing = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div[class="close-popup-icon"]')))
-		# closing.click()
-		# time.sleep(4)
-		apps = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR,'svg[aria-label="menu app fill"]')))
-		apps.click()																													# Apps Menu
-		time.sleep(7)
-		try:
-			uninstall = self.wait.until(EC.presence_of_element_located((By.XPATH,'//td[text()="Speedtest"]//following::div[1]'))) 
-			uninstall.click()																												# Uninstalling the speedtest app installed
-			time.sleep(10)
-			uninstall_ok = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Okay")]'))) 
-			uninstall_ok.click()																											# Uninstalling the speedtest app installed
-			time.sleep(9)
-		except:
-			time.sleep(1)
-			
-		upload_app = self.wait.until(EC.presence_of_element_located((By.XPATH,"//input[@type='file']"))) 
-		time.sleep(5)
-		a = os.getcwd()
-		print(a)
-		location_of_ipa = self.upload_file()
-		print("done ",location_of_ipa)
-		upload_app.send_keys(location_of_ipa)
-		time.sleep(5)
-		install = self.driver.find_element(By.XPATH,"//button[contains(text(),'Install')]")   
-		install.click()
-		time.sleep(30)
-		# okay =  self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Okay")]'))) 
-		# okay .click()
-		time.sleep(15)
-		# uninstall = self.wait.until(EC.presence_of_element_located((By.XPATH,'//td[text()="Speedtest"]//following::div[1]'))) 
-		# uninstall.click()																												# Uninstalling the speedtest app installed
-		# time.sleep(7)
-		# uninstall_ok = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[contains(text(),"Okay")]'))) 
-		# uninstall_ok.click()																											# Uninstalling the speedtest app installed
-		# time.sleep(5)
-		dismiss = self.wait.until(EC.presence_of_element_located((By.XPATH,'//button[@class="btn text-muted btn-link"]'))) 
-		dismiss.click()																											# Uninstalling the speedtest app installed
-		time.sleep(9)
-		
-	def upload_file(self):
-
-		CUR_DIR = path.dirname(path.abspath(__file__))
-		APP = path.join(CUR_DIR, 'Speedtest.ipa')
-		print(APP)
-		a = os.getcwd()
-		print(a)
-		return APP
 	
 	def screenshot(self):
 		self.status = "Failed App Function"
@@ -725,9 +394,7 @@ class SampleTest(unittest.TestCase):
 			#self.driver.get('https://ui.tricentis.headspin.io/login')
 			self.driver.get('https://ui-dev.headspin.io/')
 			self.login()
-			self.userflow()
 			self.remotecntrl()
-			self.upload()
 			self.screenshot()
 			self.status= "Passed"
 
